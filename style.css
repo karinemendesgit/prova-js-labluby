@@ -1,3 +1,223 @@
 body {
     background-color: #F7F7F7;
+    margin: 0;
+    padding: 0;
+    color: #707070;
+    font-family: Helvetica;    
+}
+
+header {
+    font-style: italic;    
+    border-bottom: 2px solid #EBEBEB;
+    height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header h1 {
+    font-size: 20px;    
+}
+
+header h1:hover {
+    cursor: pointer;
+}
+
+header strong {
+    font-size: 44px;
+}
+
+.head1 {
+    display: flex;
+    gap: 74px;
+    margin-left: 130px;
+    align-items: center;
+}
+
+.tgl {
+    border-bottom: 7px solid #B5C401;
+    border-radius: 6px;
+    width: 107px;
+    height: 79px;
+    display: flex;    
+}
+
+.tgl strong {
+    margin-left: 11px;
+    font-size: 44px;
+    margin-top: 15px;
+}
+
+.head2 {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.logout {
+    display: flex;
+    align-items: center;
+}
+
+.logout img {
+    height: 17px;
+    width: 21px;
+    margin-left: 10px;
+    margin-right: 200px;
+}
+
+main {
+    margin-left: 130px;
+    display: flex;
+    justify-content: space-between;
+    gap: 45px;
+}
+
+.text {
+    margin-top: 72px;
+}
+
+.text h2 {
+    font-size: 24px;
+    font-style: italic;
+    font-weight: lighter;
+}
+
+.text h3 {
+    font-style: italic;
+    color: #868686;
+    font-size: 17px;
+    margin-top: 30px;
+}
+
+.bet-types {
+    display: flex;
+    gap: 20px;
+}
+
+.bet-types button {
+    background-color: #FFFFFF;
+    width: 113px;
+    height: 34px;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 14px;
+    border-radius: 100px;
+}
+
+.loto {
+    border: 2px solid #7F3992;
+    color: #7F3992;
+}
+
+.loto:active {
+    background-color: #7F3992;
+    color: #FFFFFF;
+}
+
+.mega {
+    border: 2px solid #01AC66;
+    color: #01AC66;
+}
+
+.mega:active {
+    background-color: #01AC66;
+    color: #FFFFFF;
+}
+
+.mania {
+    border: 2px solid #F79C31;
+    color: #F79C31;
+}
+
+.mania:active {
+    background-color: #F79C31;
+    color: #FFFFFF;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    gap: 142px;
+    margin-top: 44px;
+}
+
+.left-btn {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.left-btn button {
+    border: 1px solid #27C383;
+    height: 52px;
+    font-size: 16px;
+    color: #27C383;
+    border-radius: 10px;
+}
+
+.right-btn button {
+    width: 209px;
+    height: 52px;
+    background: #27C383 0% 0% no-repeat padding-box;
+    color: #FFFFFF;
+    border: 1px solid #27C383;
+    border-radius: 10px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.right-btn img {
+    margin-right: 29px;
+}
+
+.container-cart {
+    width: 317px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 1px solid #E2E2E2;
+    border-radius: 10px;
+    margin-top: 42px;
+    margin-right: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.container-cart h2 {
+    margin-left: 20px;
+    margin-top: 32px;
+    font-size: 24px;
+    font-style: italic;
+    font-weight: lighter;
+}
+
+.save {
+    height: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #F4F4F4;
+    border-top: 1px solid #E2E2E2;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    cursor: pointer;
+}
+
+.save h1 {
+    color: #27C383;
+    font-size: 35px;
+    text-align: center;
+    font-style: italic;
+}
+
+.save img {
+    width: 24px;
+    height: 20px;
+    margin-left: 18px;    
+}
+
+button {
+    cursor: pointer;
 }
