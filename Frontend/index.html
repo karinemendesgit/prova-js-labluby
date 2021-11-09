@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
-  <title>Document</title>
+  <title>Lotery</title>
 </head>
 <body>
   <header>
@@ -35,19 +35,19 @@
       </div>
       <div class="fill-bet">
         <h3><b>Fill your bet</b>
-        <br><span></span>
+        <br><span data-js="bet-description"></span>
         </h3>
       </div>        
       <div class="numbers">
-        <span></span>
+        <span data-js="numbers"></span>
       </div>
       <div class="buttons">
         <div class="left-btn">
-          <button>Complete game</button>
-          <button>Clear game</button>
+          <button data-js="random-game">Complete game</button>
+          <button data-js="clear-game">Clear game</button>
         </div>
         <div class="right-btn">
-          <button>
+          <button data-js="add-game">
             <img src="./Assets/cart.svg" alt="cart icon">
             Add to cart
           </button>
@@ -56,9 +56,8 @@
     </div>
     <div class="container-cart">
         <h2><b>CART</b></h2>
-        <div class="list">
-          
-          <div class="item">
+        <div class="list" data-js="game-list-trash">          
+          <div class="item"data-js="game-list">
             <span><b><i></i></b></span>
             <div>
               <span><b><i></i></b></span>
@@ -66,13 +65,16 @@
             </div>
           </div>
         </div>
-        <h2><b>CART</b> TOTAL:</h2>    
+        <h2 data-js="game-list-total"><b>CART</b> TOTAL: R$0,00</h2>    
       <div class="save">
         <h1>Save</h1>
         <img src="./Assets/green-right-arrow.svg" alt="right arrow green icon">
       </div>
     </div>
   </main>
+  <footer>
+    <h2>Copyright 2020 Luby Software</h2>
+  </footer>
   <script src='./dom.js'></script>
   <script src='./script.js'></script>
 </body>
