@@ -3,7 +3,8 @@ body {
     margin: 0;
     padding: 0;
     color: #868686;
-    font-family: Helvetica;    
+    font-family: Helvetica;
+    height: 100vh;
 }
 
 header {
@@ -105,7 +106,7 @@ main {
     margin-bottom: 28px;
 }
 
-.bet-types button {
+/*.bet-types button {
     background-color: #FFFFFF;
     width: 113px;
     height: 34px;
@@ -143,7 +144,7 @@ main {
 .mania:active {
     background-color: #F79C31;
     color: #FFFFFF;
-}
+}*/
 
 .fill-bet {
     margin-bottom: 27px;
@@ -246,6 +247,12 @@ main {
     gap: 6px;
 }
 
+.item p {
+    margin-left: 12px;
+    font-weight: bold;
+    font-style: italic;
+}
+
 .item span {
     margin-left: 12px;
 }
@@ -277,4 +284,19 @@ main {
 
 button {
     cursor: pointer;
+}
+
+footer {
+    height: 76px;
+    margin-top: 145.5px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 2px solid #EBEBEB;
+}
+
+footer p {
+    font-size: 15px;
+    text-align: center;
+    font-weight: 100;    
 }
