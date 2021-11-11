@@ -15,8 +15,8 @@
         ajax.open('GET', './games.json');
         ajax.send();
         ajax.addEventListener('readystatechange', function() {
-          if(ajax.status === 200 && ajax.readyState === 4) {
-            let data = JSON.parse(ajax.responseText);
+          if(this.status === 200 && this.readyState === 4) {
+            let data = JSON.parse(this.responseText);
             app.firstActionsState(data.types);
           }
         });
@@ -28,18 +28,10 @@
         const btnRandom = document.querySelector('[data-js="random-game"]');
         const btnAdd = document.querySelector('[data-js="add-game"]');
         this.emptyCart();
-        app().selectBet(dataGame, selectBetType)
+        app.selectBet(dataGame, selectBetType)
         btnClear.addEventListener('click', this.clearBet);
         btnRandom.addEventListener('click', this.randomGame);
-        btnAdd.addEventListener('click', this.setNumbersInCart);
-      },
-
-      emptyCart: function() {
-        let $itemsCart = document.querySelector('.item');
-        let paragInCart = document.createElement('p');
-        paragInCart.setAttribute('class', 'emptyCart')
-        paragInCart.innerHTML= 'Carrinho Vazio';
-        $itemsCart.appendChild(paragInCart);
+        btnAdd.addEventListener('click', this.cartList);
       },
 
       selectBet: function name(dataGame, selectBetType) {
@@ -48,17 +40,17 @@
           let $button = document.createElement('button');
           $button.setAttribute('class', 'bet-type')
           $button.setAttribute('selected', false);
-          app().buttonClassBetStyle($button.style, item.color);
+          app.buttonClassBetStyle($button.style, item.color);
           if (index == 0) {
             $button.setAttribute('selected', true);
             $button.style.backgroundColor = item.color;
             $button.style.color = '#FFFFFF';
             betType = item;
-            app().setDescription();
-            app().generateBetTable(item);
+            app.setDescription();
+            app.choiceNumbersTable(item);
           }
           $button.innerHTML = item.type;
-          $button.addEventListener('click', (e) => app().buttonActiveMode(e, $button, item));
+          $button.addEventListener('click', (e) => app.buttonActiveMode(e, $button, item));
           selectBetType.appendChild($button);
         });
       }, 
@@ -75,10 +67,23 @@
         $button.style.backgroundColor = item.color;
         $button.style.color = '#FFFFFF';
         $button.setAttribute('selected', 'true');
-        let betButtons = document.querySelectorAll('.bet-type');
+        let betNumbers = document.querySelectorAll('.bet-type');
+        betNumbers.forEach(item => {
+          if(item !== e.target && item.getAttribute('selected') === 'true') {
+            let background = item.style.color;
+            item.style.color = item.style.backgroundColor;
+            item.style.backgroundColor = background;
+            item.setAttribute('selected', 'false');
+          }
+        })
         betType = item;
         this.setDescription();
-        app().generateBetTable(item);
+        app.choiceNumbersTable(item);
+      },
+
+      setDescription: function() {
+        const $descriptionText = document.querySelector('[data-js="bet-description"]');
+        $descriptionText.innerHTML = betType.description;
       },
 
       choiceNumbersTable: function (number) {
@@ -95,7 +100,7 @@
             if ($button.getAttribute('selected') === 'false' && limit !== 0) {
               selectNumbers.push(Number($button.getAttribute('id')));
               $button.setAttribute('selected','true');
-              $button.style.border =`1px solid ${number.color}`;
+              $button.style.border =`3px solid ${number.color}`;
             } else if ($button.getAttribute('selected') === 'true') {
               let indexDeleted = selectNumbers.indexOf(Number($button.getAttribute('id')));
               selectNumbers.splice(indexDeleted, 1);
@@ -139,28 +144,42 @@
         }
         buttons.forEach(item => {
           if(selectNumbers.indexOf(Number(item.id)) !== -1) {
-            item.style.border = `1px solid ${betType.color}`;
+            item.style.border = `3px solid ${betType.color}`;
             item.setAttribute('selected', 'true');
           }
         });
-      },
+      },     
 
-      setDescription: function() {
-        const $descriptionText = document.querySelector('[data-js="bet-description"]');
-        $descriptionText.innerHTML = betType.description;
+      emptyCart: function() {
+        let $itemsCart = document.querySelector('.item');
+        let paragInCart = document.createElement('p');
+        paragInCart.setAttribute('class', 'emptyCart')
+        paragInCart.innerHTML= 'Carrinho Vazio';
+        paragInCart.style.fontSize = '20px';
+        paragInCart.style.color = 'red';
+        $itemsCart.appendChild(paragInCart);
       },
 
       cartList: function() {
         const $totalTxt = document.querySelector('[data-js="game-list-total"]');
         const $divCart = document.querySelector('[data-js="game-list"]');
-        const $divElement = document.createElement('div');
+        $divCart.style.fontStyle = 'italic';
+        $divCart.setAttribute('class', 'divCart');
+        const $divElement = document.createElement('div');                    
         const $dataDiv = document.createElement('div');
+        $dataDiv.setAttribute('class', 'divData');
+        $dataDiv.style.borderLeft = `4px solid ${betType.color}`;
         const $image = document.createElement('img');
+        $image.src = "./Assets/trash.svg";
         const $btnDelete = document.createElement('button');
+        $btnDelete.style.border = 'none';
+        $btnDelete.style.backgroundColor = '#ffffff';
         const $numbersP = document.createElement('p');
         const $valueP = document.createElement('p');
+        $valueP.setAttribute('class', 'value');
         const $betTypeSpan = document.createElement('span');
-        const $getNumber = document.querySelectorAll('[data-js = div-cart]');
+        $betTypeSpan.style.color = betType.color;
+        const $getNumber = document.querySelectorAll('[data-js="div-cart"]');
 
         if($getNumber.length == 0){
           let $textCart = document.querySelector('.emptyCart');
@@ -176,9 +195,10 @@
                 
         total += price;
         $totalTxt.innerHTML = 'Total R$' + total.toFixed(2).replace('.',',');
-        $betTypeSpan.innerHTML = betType.type;             
+        $betTypeSpan.innerHTML = betType.type;       
         $divElement.setAttribute('data-js','div-cart');                
-        $numbersP.innerHTML = selectNumbers.join(', ');     
+        $numbersP.innerHTML = selectNumbers.sort(function (a, b) {
+          return a - b}).join(', ');
         $valueP.innerHTML = $betTypeSpan.outerHTML + " R$ " + String(price.toFixed(2)).replace('.',',');
         $dataDiv.appendChild($numbersP);
         $dataDiv.appendChild($valueP);
@@ -193,20 +213,20 @@
 
         trashBetGame: function(e){
           e.preventDefault();
-          const $totalTxt = document.querySelector('[data-js=cart-value-total]');
+          const $totalTxt = document.querySelector('[data-js="game-list-total"]');
           const $element = e.target;
           const btn = $element.parentNode;
           const $div = btn.parentNode;
           let $valor = $div.getAttribute('priceInSection');
           total -= $valor;
           $div.remove();
-          const $getNumber = document.querySelectorAll('[data-js = div-cart]');
+          const $getNumber = document.querySelectorAll('[data-js="div-cart"]');
 
           if($getNumber.length == 0){
             this.emptyCart();
           }
           $totalTxt.innerHTML = 'Total R$' + total.toFixed(2).replace('.',',');
-        }   
+        }
     }
 })()
 

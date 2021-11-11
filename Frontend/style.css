@@ -106,7 +106,7 @@ main {
     margin-bottom: 28px;
 }
 
-.bet-type button {
+.bet-type {
     background-color: #FFFFFF;
     width: 113px;
     height: 34px;
@@ -115,55 +115,27 @@ main {
     font-size: 14px;
     border-radius: 100px;
 }
-/*
-.loto {
-    border: 2px solid #7F3992;
-    color: #7F3992;
-}
-
-.loto:active {
-    background-color: #7F3992;
-    color: #FFFFFF;
-}
-
-.mega {
-    border: 2px solid #01AC66;
-    color: #01AC66;
-}
-
-.mega:active {
-    background-color: #01AC66;
-    color: #FFFFFF;
-}
-
-.mania {
-    border: 2px solid #F79C31;
-    color: #F79C31;
-}
-
-.mania:active {
-    background-color: #F79C31;
-    color: #FFFFFF;
-}*/
 
 .fill-bet {
     margin-bottom: 27px;
 }
 
 .numbers {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+}
+
+.numbers button {
     background-color: #ADC0C4;
     width: 63px;
     height: 65px;
     border-radius: 50%;
-    display: grid;
     gap: 12px;
-}
-
-.numbers span {
     font-size: 20px;
     font-weight: bold;
     color: #FFFFFF;
-    margin: 20px;
+    margin-top: 20px;
+    border: none;
 }
 
 .buttons {
@@ -227,7 +199,6 @@ main {
 
 .list {
     display: flex;
-    align-items: center;
     margin-left: 17px;
 }
 
@@ -238,23 +209,40 @@ main {
 }
 
 .item {
-    font-size: 15px;
-    border-left: 4px solid;
+    font-size: 15px;    
+    display: flex;
+    justify-content: center;
+}
+
+.divCart div {
+    height: auto;
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.divCart button {
+    place-content: center;
+}
+
+.divData {
     border-radius: 5px 0px 0px 5px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 6px;
+}
+
+.divData div {
+    display: flex;
+    justify-content: space-around;
+}
+
+.divData p {
+    margin-left: 12px;
+    margin-right: 16px;
 }
 
 .item p {
     margin-left: 12px;
     font-weight: bold;
-    font-style: italic;
-}
-
-.item span {
-    margin-left: 12px;
 }
 
 .save {
@@ -288,7 +276,7 @@ button {
 
 footer {
     height: 76px;
-    margin-top: 145.5px; 
+    margin-top: 70px; 
     display: flex;
     justify-content: center;
     align-items: center;
