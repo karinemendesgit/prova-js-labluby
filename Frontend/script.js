@@ -77,8 +77,14 @@
           }
         })
         betType = item;
+        this.setBetName();
         this.setDescription();
         app.choiceNumbersTable(item);
+      },
+
+      setBetName: function() {
+        const $betName = document.querySelector('.bet-name')
+        $betName.innerHTML = (betType.type).toUpperCase();
       },
 
       setDescription: function() {
