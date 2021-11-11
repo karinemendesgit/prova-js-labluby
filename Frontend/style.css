@@ -106,7 +106,7 @@ main {
     margin-bottom: 28px;
 }
 
-/*.bet-types button {
+.bet-type button {
     background-color: #FFFFFF;
     width: 113px;
     height: 34px;
@@ -115,7 +115,7 @@ main {
     font-size: 14px;
     border-radius: 100px;
 }
-
+/*
 .loto {
     border: 2px solid #7F3992;
     color: #7F3992;
