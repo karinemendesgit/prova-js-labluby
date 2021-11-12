@@ -122,6 +122,10 @@ main {
     margin-bottom: 27px;
 }
 
+.fill-bet span {
+    font-weight: 200;
+}
+
 .numbers {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
