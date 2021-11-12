@@ -28,13 +28,15 @@
         const btnRandom = document.querySelector('[data-js="random-game"]');
         const btnAdd = document.querySelector('[data-js="add-game"]');
         this.emptyCart();
-        app.selectBet(dataGame, selectBetType)
+        app.selectBet(dataGame, selectBetType);
+        app.setBetName();
         btnClear.addEventListener('click', this.clearBet);
         btnRandom.addEventListener('click', this.randomGame);
         btnAdd.addEventListener('click', this.cartList);
+        
       },
 
-      selectBet: function name(dataGame, selectBetType) {
+      selectBet: function (dataGame, selectBetType) {
         dataGame.map(function (item, index) {
           selectNumbers = [];
           let $button = document.createElement('button');
@@ -83,7 +85,7 @@
       },
 
       setBetName: function() {
-        const $betName = document.querySelector('.bet-name')
+        const $betName = document.querySelector('.bet-name');
         $betName.innerHTML = (betType.type).toUpperCase();
       },
 
@@ -102,7 +104,7 @@
           $button.setAttribute('data-js', 'number');
           $button.innerHTML = i > 9 ? i : '0' + i;
           $button.addEventListener('click', function() {
-            let limit = number['max-number'] - selectNumbers.length;
+            let limit = Number(betType['max-number']) - selectNumbers.length;
             if ($button.getAttribute('selected') === 'false' && limit !== 0) {
               selectNumbers.push(Number($button.getAttribute('id')));
               $button.setAttribute('selected','true');
@@ -112,10 +114,15 @@
               selectNumbers.splice(indexDeleted, 1);
               $button.setAttribute('selected', 'false');
               $button.style.border = 'none';
-              limit = number['max-number'] - selectNumbers.length;
-            } if (limit == 0) {
-              window.alert('A quantidade máxima de números já foi preenchida');
-            }              
+              limit = Number(betType['max-number']) - selectNumbers.length;
+              if(limit > 0) {
+                return window.alert(`Selecione ${betType['max-number']} números para adicionar ao carrinho. Adicione mais ${limit} números para finalizar.`);
+              };    
+            } 
+            if (limit == 0) {
+              return window.alert('A quantidade máxima de números já foi preenchida');
+            }
+              
           });
           $betNumbers.appendChild($button);
         }
@@ -123,8 +130,7 @@
 
       clearBet: function() {
         if(selectNumbers.length == 0) {
-          window.alert('Não há nenhum número selecionado');
-          return;
+          return window.alert('Não há nenhum número selecionado');
         }
         let buttons = document.querySelectorAll('[data-js="number"]');
         buttons.forEach(item => {
@@ -147,7 +153,7 @@
             selectNumbers.push(random);
             counter++;
           }
-        }
+        }        
         buttons.forEach(item => {
           if(selectNumbers.indexOf(Number(item.id)) !== -1) {
             item.style.border = `3px solid ${betType.color}`;
@@ -157,12 +163,10 @@
       },     
 
       emptyCart: function() {
-        let $itemsCart = document.querySelector('.item');
-        let paragInCart = document.createElement('p');
+        let $itemsCart = document.querySelector('[data-js="game-list"]');
+        let paragInCart = document.createElement('div');
         paragInCart.setAttribute('class', 'emptyCart')
         paragInCart.innerHTML= 'Carrinho Vazio';
-        paragInCart.style.fontSize = '20px';
-        paragInCart.style.color = 'red';
         $itemsCart.appendChild(paragInCart);
       },
 
@@ -190,17 +194,14 @@
         if($getNumber.length == 0){
           let $textCart = document.querySelector('.emptyCart');
           $textCart.remove();
-        }                    
-        let numbersInDescription = betType.description.match(/\d+/g);
-        let menor = Math.min(...numbersInDescription);
-        let price = betType.price;
-        if(selectNumbers.length < menor ){
-          window.alert(`Selecione ${betType['max-number']} números para adicionar ao carrinho`);
-          return;
         }
-                
+        let limit = Number(betType['max-number']) - selectNumbers.length;
+        let price = betType.price;
+        if(selectNumbers.length < limit ){
+          return window.alert(`Selecione ${betType['max-number']} números para adicionar ao carrinho. Adicione mais ${limit} números para finalizar.`);          
+        }
         total += price;
-        $totalTxt.innerHTML = 'Total R$' + total.toFixed(2).replace('.',',');
+        $totalTxt.innerHTML = 'CART TOTAL R$' + total.toFixed(2).replace('.',',');
         $betTypeSpan.innerHTML = betType.type;       
         $divElement.setAttribute('data-js','div-cart');                
         $numbersP.innerHTML = selectNumbers.sort(function (a, b) {
@@ -213,8 +214,8 @@
         $divElement.appendChild($btnDelete);
         $divElement.appendChild($dataDiv);
         $divCart.appendChild($divElement);
-        $btnDelete.addEventListener('click',(e)=> app.trashBetGame(e));
-        app.clearBalls();
+        $btnDelete.addEventListener('click',(e) => app.trashBetGame(e));
+        app.clearBet();
         },
 
         trashBetGame: function(e){
@@ -231,10 +232,10 @@
           if($getNumber.length == 0){
             this.emptyCart();
           }
-          $totalTxt.innerHTML = 'Total R$' + total.toFixed(2).replace('.',',');
+          $totalTxt.innerHTML = 'CART TOTAL R$' + total.toFixed(2).replace('.',',');
         }
     }
-})()
+})();
 
 app.init();
 

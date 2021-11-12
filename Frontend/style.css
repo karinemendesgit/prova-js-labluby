@@ -84,7 +84,6 @@ main {
     font-style: italic;
     color: #868686;
     font-size: 17px;
-    margin-top: 30px;
 }
 
 .bet-title {
@@ -184,6 +183,7 @@ main {
 
 .container-cart {
     width: 317px;
+    height: 670px;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     border: 1px solid #E2E2E2;
     border-radius: 10px;
@@ -220,10 +220,22 @@ main {
     justify-content: center;
 }
 
+.emptyCart {
+    font-size: 20px;
+    font-style: normal;
+    color: red;
+}
+
+.divCart {
+    max-height: 400px;
+    overflow-y: auto;
+    width: 280px;
+}
+
 .divCart div {
     height: auto;
     display: flex;
-    margin-bottom: 20px;
+    margin-bottom: 20px;    
 }
 
 .divCart button {
