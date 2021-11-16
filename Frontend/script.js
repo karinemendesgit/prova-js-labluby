@@ -180,7 +180,7 @@
       },
 
       cartList: function() {
-        let noRepeat = [...new Set(selectNumbers)];
+        let noRepeat = [...selectNumbers];
         if (noRepeat.length != betType['max-number']) {
           if (noRepeat.length < betType['max-number']) {
             let limit = Number(betType['max-number']) - noRepeat.length;
