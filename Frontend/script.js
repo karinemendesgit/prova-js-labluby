@@ -5,6 +5,7 @@
     let selectNumbers = [];
     let betType;
     let total = 0;
+    let numbers = [];
     return {
       init: function() {
         this.selectDataBase();
@@ -33,7 +34,6 @@
         btnClear.addEventListener('click', this.clearBet);
         btnRandom.addEventListener('click', this.randomGame);
         btnAdd.addEventListener('click', this.cartList);
-        
       },
 
       selectBet: function (dataGame, selectBetType) {
@@ -55,7 +55,17 @@
           $button.addEventListener('click', (e) => app.buttonActiveMode(e, $button, item));
           selectBetType.appendChild($button);
         });
-      }, 
+      },
+
+      setBetName: function() {
+        const $betName = document.querySelector('.bet-name');
+        $betName.innerHTML = (betType.type).toUpperCase();
+      },
+
+      setDescription: function() {
+        const $descriptionText = document.querySelector('[data-js="bet-description"]');
+        $descriptionText.innerHTML = betType.description;
+      },
       
       buttonClassBetStyle: function(button, color) {
         button.backgroundColor = '#FFFFFF';
@@ -84,16 +94,6 @@
         app.choiceNumbersTable(item);
       },
 
-      setBetName: function() {
-        const $betName = document.querySelector('.bet-name');
-        $betName.innerHTML = (betType.type).toUpperCase();
-      },
-
-      setDescription: function() {
-        const $descriptionText = document.querySelector('[data-js="bet-description"]');
-        $descriptionText.innerHTML = betType.description;
-      },
-
       choiceNumbersTable: function (number) {
         const $betNumbers = document.querySelector('.numbers');
         $betNumbers.innerHTML = '';
@@ -114,8 +114,7 @@
               selectNumbers.splice(indexDeleted, 1);
               $button.setAttribute('selected', 'false');
               $button.style.border = 'none';
-              limit = Number(betType['max-number']) - selectNumbers.length;
-              if(limit > 0) {
+              if (selectNumbers.length < Number(betType['max-number'])) {
                 return window.alert(`Selecione ${betType['max-number']} números para adicionar ao carrinho. Adicione mais ${limit} números para finalizar.`);
               };    
             } 
@@ -170,52 +169,76 @@
         $itemsCart.appendChild(paragInCart);
       },
 
-      cartList: function() {
-        const $totalTxt = document.querySelector('[data-js="game-list-total"]');
-        const $divCart = document.querySelector('[data-js="game-list"]');
-        $divCart.style.fontStyle = 'italic';
-        $divCart.setAttribute('class', 'divCart');
-        const $divElement = document.createElement('div');                    
-        const $dataDiv = document.createElement('div');
-        $dataDiv.setAttribute('class', 'divData');
-        $dataDiv.style.borderLeft = `4px solid ${betType.color}`;
-        const $image = document.createElement('img');
-        $image.src = "./Assets/trash.svg";
-        const $btnDelete = document.createElement('button');
-        $btnDelete.style.border = 'none';
-        $btnDelete.style.backgroundColor = '#ffffff';
-        const $numbersP = document.createElement('p');
-        const $valueP = document.createElement('p');
-        $valueP.setAttribute('class', 'value');
-        const $betTypeSpan = document.createElement('span');
-        $betTypeSpan.style.color = betType.color;
-        const $getNumber = document.querySelectorAll('[data-js="div-cart"]');
+      verifyNumber: function (noRepeat) {
+        let differentNumber = false;
+        numbers.forEach((num) => {
+            if (num.toString() == noRepeat.toString()) {
+                differentNumber = true;
+            }
+        });
+        return differentNumber;
+      },
 
-        if($getNumber.length == 0){
-          let $textCart = document.querySelector('.emptyCart');
-          $textCart.remove();
-        }
-        let limit = Number(betType['max-number']) - selectNumbers.length;
-        let price = betType.price;
-        if(selectNumbers.length < limit ){
-          return window.alert(`Selecione ${betType['max-number']} números para adicionar ao carrinho. Adicione mais ${limit} números para finalizar.`);          
-        }
-        total += price;
-        $totalTxt.innerHTML = 'CART TOTAL R$' + total.toFixed(2).replace('.',',');
-        $betTypeSpan.innerHTML = betType.type;       
-        $divElement.setAttribute('data-js','div-cart');                
-        $numbersP.innerHTML = selectNumbers.sort(function (a, b) {
-          return a - b}).join(', ');
-        $valueP.innerHTML = $betTypeSpan.outerHTML + " R$ " + String(price.toFixed(2)).replace('.',',');
-        $dataDiv.appendChild($numbersP);
-        $dataDiv.appendChild($valueP);
-        $btnDelete.appendChild($image);
-        $divElement.setAttribute('priceInSection',`${betType.price}`);
-        $divElement.appendChild($btnDelete);
-        $divElement.appendChild($dataDiv);
-        $divCart.appendChild($divElement);
-        $btnDelete.addEventListener('click',(e) => app.trashBetGame(e));
-        app.clearBet();
+      cartList: function() {
+        let noRepeat = [...new Set(selectNumbers)];
+        if (noRepeat.length != betType['max-number']) {
+          if (noRepeat.length < betType['max-number']) {
+            let limit = Number(betType['max-number']) - noRepeat.length;
+            window.alert(`Selecione ${betType['max-number']} números para adicionar ao carrinho. Adicione mais ${limit} números para finalizar.`);
+          }
+      } else {
+          noRepeat.sort((a, b) => a - b);
+
+          if (app.verifyNumber(noRepeat)) {
+            alert('Aposta feita anteriormente com os mesmos números!');
+          } else {
+            numbers.push(noRepeat);
+            const $totalTxt = document.querySelector('[data-js="game-list-total"]');
+            const $divCart = document.querySelector('[data-js="game-list"]');
+            $divCart.style.fontStyle = 'italic';
+            $divCart.setAttribute('class', 'divCart');
+            const $divElement = document.createElement('div');                    
+            const $dataDiv = document.createElement('div');
+            $dataDiv.setAttribute('class', 'divData');
+            $dataDiv.style.borderLeft = `4px solid ${betType.color}`;
+            const $image = document.createElement('img');
+            $image.src = "./Assets/trash.svg";
+            const $btnDelete = document.createElement('button');
+            $btnDelete.style.border = 'none';
+            $btnDelete.style.backgroundColor = '#ffffff';
+            const $numbersP = document.createElement('p');
+            const $valueP = document.createElement('p');
+            $valueP.setAttribute('class', 'value');
+            const $betTypeSpan = document.createElement('span');
+            $betTypeSpan.style.color = betType.color;
+            const $getNumber = document.querySelectorAll('[data-js="div-cart"]');
+            if($getNumber.length == 0){
+              let $textCart = document.querySelector('.emptyCart');
+              $textCart.remove();
+            }
+            //let limit = Number(betType['max-number']) - selectNumbers.length;
+            let price = betType.price;
+            /*if(selectNumbers.length < Number(betType['max-number']) ){
+              return window.alert(`Selecione ${betType['max-number']} números para adicionar ao carrinho. Adicione mais ${limit} números para finalizar.`);          
+            }*/
+            total += price;
+            $totalTxt.innerHTML = 'CART TOTAL R$' + total.toFixed(2).replace('.',',');
+            $betTypeSpan.innerHTML = betType.type;       
+            $divElement.setAttribute('data-js','div-cart');                
+            $numbersP.innerHTML = noRepeat.sort(function (a, b) {
+              return a - b}).join(', ');
+            $valueP.innerHTML = $betTypeSpan.outerHTML + " R$ " + String(price.toFixed(2)).replace('.',',');
+            $dataDiv.appendChild($numbersP);
+            $dataDiv.appendChild($valueP);
+            $btnDelete.appendChild($image);
+            $divElement.setAttribute('priceInSection',`${betType.price}`);
+            $divElement.appendChild($btnDelete);
+            $divElement.appendChild($dataDiv);
+            $divCart.appendChild($divElement);
+            $btnDelete.addEventListener('click',(e) => app.trashBetGame(e));
+            app.clearBet();
+              }
+          }
         },
 
         trashBetGame: function(e){
