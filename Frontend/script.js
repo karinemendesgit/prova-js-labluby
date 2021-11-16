@@ -216,11 +216,7 @@
               let $textCart = document.querySelector('.emptyCart');
               $textCart.remove();
             }
-            //let limit = Number(betType['max-number']) - selectNumbers.length;
             let price = betType.price;
-            /*if(selectNumbers.length < Number(betType['max-number']) ){
-              return window.alert(`Selecione ${betType['max-number']} números para adicionar ao carrinho. Adicione mais ${limit} números para finalizar.`);          
-            }*/
             total += price;
             $totalTxt.innerHTML = 'CART TOTAL R$' + total.toFixed(2).replace('.',',');
             $betTypeSpan.innerHTML = betType.type;       
@@ -237,7 +233,7 @@
             $divCart.appendChild($divElement);
             $btnDelete.addEventListener('click',(e) => app.trashBetGame(e));
             app.clearBet();
-              }
+            }
           }
         },
 
